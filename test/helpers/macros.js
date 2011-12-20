@@ -18,14 +18,19 @@ macros.testData = {
 };
 
 macros.assertListen = function (name, port, vows) {
+  var options = hookOptions(port);
+
   var context = {
     topic: function () {
       var instance = new Hook({ name: name });
       instance.on('hook::listening', this.callback.bind(instance, null, instance));
-      instance.listen({ "hook-port": port });
+      instance.listen(options);
     },
-    "it should fire the `hook::listening` event": function () {
-      assert.equal(this.event, 'hook::listening');      
+    "it should fire the `hook::listening` event": function (_, hook, data) {
+      assert.equal(this.event, 'hook::listening');
+    },
+    "the event data should indicate the correct port or socket": function (_, hook, data) {
+      assert.equal(data, port)
     }
   };
   
@@ -33,28 +38,35 @@ macros.assertListen = function (name, port, vows) {
 };
 
 macros.assertConnect = function (name, port, vows) {
+  var options = hookOptions(port);
+
   var context = {
     topic: function () {
       var instance = new Hook({ name: name });
       instance.on('hook::connected', this.callback.bind(instance, null, instance));
-      instance.connect({ "hook-port": port });
+      instance.connect(options);
     },
-    "should fire the `hook::connected` event": function () {
+    "should fire the `hook::connected` event": function (_, hook, data) {
       assert.equal(this.event, 'hook::connected');
+    },
+    "the event data should indicate the correct port or socket": function (_, hook, data) {
+      assert.equal(data, port)
     }
   };
   
   return extendContext(context, vows);
-};
+}
 
 macros.assertReady = function (name, port, vows) {
+  var options = hookOptions(port);
+
   var context = {
     topic: function () {
       var instance = new Hook({ name: name });
       instance.on('hook::ready', this.callback.bind(instance, null, instance));
       instance.start({ "hook-port": port });
     },
-    "should fire the `hook::ready` event": function (_, hook) {
+    "should fire the `hook::ready` event": function (_, hook, data) {
       assert.equal(this.event, 'hook::ready');
     }
   };
@@ -171,6 +183,23 @@ macros.assertPingPong = function (port, ping, pong) {
     "and a hook attempts to `.connect()`": macros.assertConnect(pong.name, port, pingContext)
   });
 };
+
+function toPort (x) {
+  return (x = Number(x)) >= 0 ? x : false;
+}
+
+function hookOptions (port) {
+  var options = {};
+
+  if (toPort(port)) {
+    options["hook-port"] = port;
+  }
+  else {
+    options["hook-socket"] = port;
+  }
+
+  return options;
+}
 
 function extendContext (context, vows) {
   if (vows) {
