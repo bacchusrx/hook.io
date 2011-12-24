@@ -64,7 +64,7 @@ macros.assertReady = function (name, port, vows) {
     topic: function () {
       var instance = new Hook({ name: name });
       instance.on('hook::ready', this.callback.bind(instance, null, instance));
-      instance.start({ "hook-port": port });
+      instance.start(options);
     },
     "should fire the `hook::ready` event": function (_, hook, data) {
       assert.equal(this.event, 'hook::ready');
