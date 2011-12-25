@@ -90,7 +90,7 @@ macros.assertSpawn = function (hooks, local, vows) {
     },
     "that is called simple" : function (_, hook) {
       assert.isObject(hook.children);
-      assert.isObject(hook.children['hook']);
+      assert.isObject(hook.children['no-name']);
     },
     "without coughing up an error" : function (err, hook) {
       assert.notEqual(typeof err, 'Error');
@@ -113,7 +113,7 @@ macros.assertSpawn = function (hooks, local, vows) {
 };
 
 macros.assertHelloWorld = function (local) {
-  return macros.assertSpawn('helloworld', local, {
+  return macros.assertSpawn({"src": __dirname + "/../fixtures/HelloWorld.js"}, local, {
     "the parent hook": {
       topic: function (host) {
         host.on('*::hello', this.callback.bind(host, null));
@@ -121,9 +121,8 @@ macros.assertHelloWorld = function (local) {
       "should emit helloworld": function (_, message) {
         assert.equal(this.event, 'no-name::hello');
         assert.equal(message, 'Hello, I am no-name');
-        
-        if (this.children['hook'].monitor) {
-          this.children['hook'].monitor.stop();
+        if (this.children['no-name'].monitor) {
+          this.children['no-name'].monitor.stop();
         }
         this.server.close();
       }
