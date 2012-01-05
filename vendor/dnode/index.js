@@ -5,7 +5,7 @@ var EventEmitter = require('events').EventEmitter;
 var protocol = require('../dnode-protocol');
 var Lazy = require('lazy');
 var weak = require('weak');
-var SocketIO = require('./lib/stream_socketio');
+var SocketIO = function() { throw "socket.io support is unimplemented" };
 
 exports = module.exports = dnode;
 
