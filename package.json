@@ -1,7 +1,7 @@
 {
   "author": "Marak Squires <marak.squires@gmail.com>",
   "name": "hook.io",
-  "version": "0.8.5",
+  "version": "0.8.9",
   "repository": {
     "type": "git",
     "url": "git://github.com/hookio/hook.io.git"
@@ -29,23 +29,23 @@
     "eventemitter2": "0.4.x",
     "optimist": "0.2.x",
     "nconf": "0.3.x",
-    "npm": "1.0.x",
+    "npm": "~1.1.x",
     "pkginfo": "0.2.x",
     "mkdirp": "0.2.x",
     "semver": "1.0.x",
     "prompt": "0.1.x",
     "portfinder": "0.2.x",
-    "weak": "0.1.x",
+    "weak": "0.2.x",
     "socket.io" : "0.8.6",
     "socket.io-client" : "https://github.com/substack/socket.io-client/tarball/master",
     "lazy" : ">=1.0.5 <1.1",
-    "traverse" : "0.4.x",
     "dnode-protocol" : "0.1.x",
-    "traverse" : "0.5.x",
-    "jsonify" : "0.0.x"
+    "traverse" : "0.6.x",
+    "jsonify" : "0.0.x",
+    "winston": "0.5.10"
   },
   "scripts": {
-    "test": "vows test/**/*-test.js --isolate --spec"
+    "test": "vows test/**/*-test.js --spec"
   },
   "browserify" : { 
     "base" : "./lib", 
@@ -56,7 +56,6 @@
     "findit": "0.x.x",
     "forever": "0.6.x",
     "hook.io-helloworld" : "0.3.x",
-    "winston": "0.3.x",
     "vows": "0.5.x >=0.5.10"
   }
 }

@@ -1,11 +1,5 @@
-     __    __    ______     ______    __  ___         __    ______   
-    |  |  |  |  /  __  \   /  __  \  |  |/  /        |  |  /  __  \  
-    |  |__|  | |  |  |  | |  |  |  | |  '  /         |  | |  |  |  | 
-    |   __   | |  |  |  | |  |  |  | |    <          |  | |  |  |  | 
-    |  |  |  | |  `--'  | |  `--'  | |  .  \    __   |  | |  `--'  | 
-    |__|  |__|  \______/   \______/  |__|\__\  (__)  |__|  \______/  
+<img src="http://i.imgur.com/S2rgr.png"></img>
 
-    a way to enable i/o for your node.js application
     
 ## hook.io is a distributed EventEmitter built on node.js. In addition to providing a minimalistic event framework, hook.io also provides a rich network of [hook libraries](https://github.com/hookio/hook.io/wiki/Hook.io-Libraries) for managing all sorts of input and output.
 
@@ -81,6 +75,38 @@ Using the `-p` option, hook.io will stream events to STDOUT as `\n` delimited JS
 
     {"name":"the-hook","event":"the-hook::sup","data":{"foo":"bar"}}
 
+
+# Multicast DNS ( mdns )
+
+[Multicast DNS (mdns)](http://en.wikipedia.org/wiki/Multicast_DNS) is a way of using [DNS](http://en.wikipedia.org/wiki/Domain_Name_System) programming interfaces, packet formats and operating semantics on a small network where no DNS server is running. The mDNS protocol is used by Apple's <a href="http://en.wikipedia.org/wiki/Bonjour_(software)">Bonjour<a/> and Linux <a href="http://en.wikipedia.org/wiki/Avahi_(software)">Avahi<a/> service discovery systems. mdns is an easy way to help networked devices find each other without any prior configuration.
+
+hook.io has built-in experimental mdns support. This is intended to work on all operating systems and is intented for a way to provide<a href="http://en.wikipedia.org/wiki/Zeroconf">zero configuration networking</a> discovery and connection of hooks over a [Local Area Network](http://en.wikipedia.org/wiki/Local_area_network) ( LAN )
+
+**IMPORTANT**
+
+Before you can use the mdns feature, you will need to install a few additional dependencies.
+
+     npm install mdns@0.0.4
+
+MacOS and Windows should work out of the box. If you are running Linux, you may need to install the following libraries.
+
+     apt-get install libavahi-compat-libdnssd-dev
+
+**using mdns**
+
+Computer 1
+
+     hookio -m
+
+
+Computer 2
+
+    hookio -m
+
+Now these two computers ( connected over a LAN, with no central DNS server ) will automatically discovery each other and begin to transmit messages. Think of the possibilities!
+
+
+
 # Available Hooks (more coming soon)
 
 Hook Library wiki: [https://github.com/hookio/hook.io/wiki/Hook.io-Libraries](https://github.com/hookio/hook.io/wiki/Hook.io-Libraries)
@@ -126,7 +152,7 @@ hookA.on('*::sup', function(data){
 
 // Hook.start defaults to localhost
 // it can accept dnode constructor options ( for remote connections )
-// these hooks can be started on diffirent machines / networks / devices
+// these hooks can be started on different machines / networks / devices
 hookA.start();
 
 var hookB = new Hook({
@@ -154,22 +180,26 @@ All tests are written with [vows](http:://vowsjs.org) and require that you link 
 
 ## Core Contributors ( https://github.com/hookio/hook.io/contributors )
 
- - Marak (Marak Squires)
- - indexzero (Charlie Robbins)
- - jamesonjlee (Jameson)
- - AvianFlu (Charlie McConnell)
- - jesusabdullah (Joshua Holbrook)
- - temsa
- - mmalecki (Maciej Małecki)
- - pkumar (Pavan Kumar Sunkara)
- - Marsup (Nicolas Morel)
- - mklabs (Mickael Daniel)
- - Tim-Smart (Tim)
- - stolsma (Sander Tolsma)
- - ejeklint (Per Ejeklint)
- - thejh (Jann Horn)
- - perezd (Derek Perez)
- - mwawrusch (Martin Wawrusch)
+  - Marak (Marak Squires)
+  - indexzero (Charlie Robbins)
+  - jesusabdullah (Joshua Holbrook)
+  - temsa (Florian Traverse)
+  - mmalecki (Maciej Małecki)
+  - jamesonjlee (Jameson)
+  - pksunkara (Pavan Kumar Sunkara)
+  - Marsup (Nicolas Morel)
+  - mklabs (Mickael Daniel)
+  - Tim-Smart (Tim)
+  - stolsma (Sander Tolsma)
+  - sergeyksv
+  - thejh (Jann Horn)
+  - booyaa (Mark Sta Ana)
+  - perezd (Derek Perez)
+  - ejeklint (Per Ejeklint)
+  - emilisto (Emil Stenqvist)
+  - vns
+  - mwawrusch (Martin Wawrusch)
+  - AvianFlu (Charlie McConnell)
 
 ## MIT License
 
